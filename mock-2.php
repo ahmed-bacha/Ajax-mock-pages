@@ -87,17 +87,7 @@ require_once("header.php");
       </p>
     </div>
 
-    <div>
-      <h4>This is an Ajax loaded text ! </h4>
 
-      <p>
-        Le Lorem Ipsum est simplement du faux texte employé dans
-        la composition et la mise en page avant impression.
-        Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500,
-        quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un
-        livre spécimen de polices de texte.
-      </p>
-    </div>
 
     <div id="zone">
 
@@ -115,27 +105,15 @@ require_once("header.php");
 
 $( document ).ready(function() {
 
-  var loading  = false; //to prevents multipal ajax loads
-
-  $(window).scroll(function() {
-
-    if($(window).scrollTop() + $(window).height() == $(document).height())  //user scrolled to bottom of the page?
-      {
-        $("#zone").slideDown(1000, function(){
-          $(this).load('text.php');
-        });
-      }
-    });
-
-  $("#load-btn").click(function(event){
-    $("#zone").slideDown(1000, function(){
-      var txt = load('text.php');
-
-      $(this).append(txt);
-
-    });
+  $(window).on("scroll", function() {
+    var scrollHeight = $(document).height();
+    var scrollPosition = $(window).height() + $(window).scrollTop();
+    if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+      $("#zone").slideDown(1000, function(){
+        $(this).load('text.php');
+      });
+    }
   });
-
 
 });
 
